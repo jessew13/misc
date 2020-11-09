@@ -9,7 +9,7 @@ def add_course(self, course: str, time: str, hours: int):
     if can_add:
         if course not in self.schedule:  # if course not already in schedule
             self.credit_hours += hours  # add hours to self.credit_hours
-        self.schedule[course] = time  # update the time for the course if the course does or does not exist in schedule
+        self.schedule[course] = time  # this needs to be executed regardless of whether or not the course was already in the schedule
 
 def drop_course(self, course: str, hours: int):
     can_drop: bool = True
@@ -19,6 +19,6 @@ def drop_course(self, course: str, hours: int):
     elif not self.full_time and self.credit_hours - hours <= 0:
         print("Drop unsuccessful: must be enrolled in a class to maintain student status.")
         can_drop = False
-    if can_drop and course in self.schedule:  # could make course in... become a whole if with error msg and put it at the top
+    if can_drop and course in self.schedule:
         self.schedule.pop(course)
         self.credit_hours -= hours
