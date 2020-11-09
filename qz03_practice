@@ -1,0 +1,24 @@
+def add_course(self, course: str, time: str, hours: int):
+    can_add: bool = True
+    if self.full_time and self.credit_hours + hours > 18:
+        print("Add unsuccessful: too many credit hours.")
+        can_add = False
+    elif not self.full_time and self.credit_hours + hours > 8:
+        print("Add unsuccessful: too many credit hours.")
+        can_add = False
+    if can_add:
+        if course not in self.schedule:  # if course not already in schedule
+            self.credit_hours += hours  # add hours to self.credit_hours
+        self.schedule[course] = time  # update the time for the course if the course does or does not exist in schedule
+
+def drop_course(self, course: str, hours: int):
+    can_drop: bool = True
+    if self.full_time and self.credit_hours - hours < 12:
+        print("Drop unsuccessful: must take at least 12 credit hours to maintain full time status.")
+        can_drop = False
+    elif not self.full_time and self.credit_hours - hours <= 0:
+        print("Drop unsuccessful: must be enrolled in a class to maintain student status.")
+        can_drop = False
+    if can_drop and course in self.schedule:  # could make course in... become a whole if with error msg and put it at the top
+        self.schedule.pop(course)
+        self.credit_hours -= hours
