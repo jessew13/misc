@@ -1,4 +1,5 @@
-def add_course(self, course: str, time: str, hours: int):
+def add_course(self, course: str, time: str, hours: int) -> None:
+    """Adds a course to the student's schedule if requirements are met."""
     can_add: bool = True
     if self.full_time and self.credit_hours + hours > 18:
         print("Add unsuccessful: too many credit hours.")
@@ -11,7 +12,8 @@ def add_course(self, course: str, time: str, hours: int):
             self.credit_hours += hours  # add hours to self.credit_hours
         self.schedule[course] = time  # this needs to be executed regardless of whether or not the course was already in the schedule
 
-def drop_course(self, course: str, hours: int):
+def drop_course(self, course: str, hours: int) -> None:
+    """Drops a course from the student's schedule if requirements are met."""
     can_drop: bool = True
     if self.full_time and self.credit_hours - hours < 12:
         print("Drop unsuccessful: must take at least 12 credit hours to maintain full time status.")
