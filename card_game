@@ -1,0 +1,55 @@
+"""Check https://youtu.be/xHjQhliXUB0?t=420 for an explanation of this card game."""
+
+from typing import List
+from matplotlib import pyplot
+import random
+
+
+TRIALS: int = 3000  # number of trials for each card position guess
+DECK: List[int] = [1, 1, 1, 1]  # the 1s represent aces
+for i in range(48):
+    DECK.append(0)  # 0s represent the rest of the arbitrary cards in the deck
+LIST_X: List[int] = []
+for i in range(1, 53):
+    LIST_X.append(i)  # the list of x-values to be plotted
+
+
+def main() -> None:
+    """Entrypoint of program."""
+    list_y: List[float] = []
+    for n in range(52):
+        list_y.append(average_results(n))
+    chart(LIST_X, list_y)
+
+
+def simulate(n: int) -> bool:
+    """Shuffles the deck and returns True if the card in the nth position is the fourth ace in the deck, else returns False."""
+    random.shuffle(DECK)  # shuffle the deck
+    if DECK[n - 1] == 1:
+        if 1 in DECK[n:]:  # if there are any 1's in the rest of the deck, the guess is wrong
+            return False
+    else:
+        return False  # if the nth card was not a 1, the guess is wrong
+    return True
+
+
+def average_results(n: int) -> float:
+    """Returns percent chance that guessing the n position is a win: number of wins/TRIALS."""
+    count: int = 0
+    for _ in range(TRIALS):
+        if simulate(n):
+            count += 1
+    return count / TRIALS * 100
+
+
+def chart(list_x: List[int], list_y: List[float]) -> None:
+    """Charts data in histogram."""
+    pyplot.title("Card Game")
+    pyplot.xlabel("Card position guessed")
+    pyplot.ylabel("Chance of winning (in percent)")
+    pyplot.bar(list_x, list_y)
+    pyplot.show()
+
+
+if __name__ == "__main__":
+    main()
